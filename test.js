@@ -12,7 +12,13 @@ var fixture = {
 	e: ['foo', 'bar'],
 	f: null,
 	g: undefined,
-	camelCaseCamel: true
+	camelCaseCamel: true,
+	h: {
+		i: 'hi',
+		j: {
+			k:'jk'
+		}
+	}
 };
 
 describe('dargs()', function () {
@@ -24,7 +30,9 @@ describe('dargs()', function () {
 			'--d', '5',
 			'--e', 'foo',
 			'--e', 'bar',
-			'--camel-case-camel'
+			'--camelCaseCamel',
+			'--h.i', 'hi',
+			'--h.j.k', 'jk'
 		];
 		assert.deepEqual(actual, expected);
 	});
@@ -34,7 +42,9 @@ describe('dargs()', function () {
 		var expected = [
 			'--a', 'foo',
 			'--d', '5',
-			'--camel-case-camel'
+			'--camelCaseCamel',
+			'--h.i', 'hi',
+			'--h.j.k', 'jk'
 		];
 		assert.deepEqual(actual, expected);
 	});
