@@ -1,6 +1,6 @@
 {
   "name": "dargs-object",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Fork of https://github.com/sindresorhus/dargs. Converts an object of options into an array of command-line arguments. Useful when calling command-line tools. Now object-aware",
   "keywords": [
     "options",
