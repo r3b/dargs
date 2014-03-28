@@ -8,8 +8,8 @@ Basically the inverse of an argument parser like nopt or minimist.
 
 The differences are...
 
-	- camelCase option names are not modified to dash-separated-words
-	- objects are flattened and included as '--key.subkey value'
+- camelCase option names are not modified to dash-separated-words
+- objects are flattened and included as '--key.subkey value'
 
 
 ## Install
