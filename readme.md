@@ -1,4 +1,4 @@
-# dargs [![Build Status](https://travis-ci.org/sindresorhus/dargs.png?branch=master)](https://travis-ci.org/sindresorhus/dargs)
+# dargs-object
 
 > Converts an object of options into an array of command-line arguments
 
@@ -24,7 +24,7 @@ $ npm install --save dargs-object
 ```js
 var dargs = require('dargs-object');
 
-var options = {
+var obj = {
 	foo: 'bar',
 	hello: true,                    // results in only the key being used
 	cake: false,                    // ignored
@@ -34,9 +34,12 @@ var options = {
 	sad: ':('
 };
 
-var excludes = ['sad'];
-
-console.log(dargs(options, excludes));
+var options={
+	excludes:['sad'],
+	convertCamelCase:true,
+	joinLists:false
+};
+console.log(dargs(obj, options));
 
 /*
 [
@@ -53,21 +56,25 @@ console.log(dargs(options, excludes));
 
 ## API
 
-### dargs(options, excludes)
+### dargs(obj, options)
+
+#### obj
+
+Type: `Object`
+
+an object containing options to convert to command-line arguments.
 
 #### options
 
 Type: `Object`
 
-Options to convert to command-line arguments.
+Properties:
 
-#### excludes
-
-Type: `Array`
-
-Keys to exclude.
+- excludes: Keys to exclude.
+- joinLists: If false (default), array values will generate multiple flags: '--list thing1 --list thing2 --list thing3'. If true, array values will be passed, delimited, to a single flag: '--list thing1,thing2,thing3'.
+- convertCamelCase (default: false): Convert camelCase flags to camel-case
 
 
 ## License
 
-[MIT](http://opensource.org/licenses/MIT) © [Sindre Sorhus](http://sindresorhus.com)
+[MIT](http://opensource.org/licenses/MIT) © [Ryan Bridges](http://fasterness.com), based off the original dargs by [Sindre Sorhus](http://sindresorhus.com)

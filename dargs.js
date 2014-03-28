@@ -12,7 +12,7 @@
 	Thanks, penguinboy!
  */
 var flattenObject = function(ob) {
-	if(Array.isArray(ob) || "object"!==typeof ob){
+	if("object"!==typeof ob || Array.isArray(ob)){
 		return ob;
 	}else{
 		return Object.keys(ob)
@@ -32,21 +32,24 @@ var flattenObject = function(ob) {
 			},{});
 	}
 };
-module.exports = function (options, excludes) {
-	var args = [];
-	Object.keys(options)
+module.exports = function (obj, options) {
+	options=options||{};
+	var args = [], 
+		excludes=options.excludes,
+		joinLists=options.joinLists||false,
+		convertCamelCase=options.convertCamelCase||false;
+	Object.keys(obj)
 		.filter(function(key){
-			return options.hasOwnProperty(key) && options[key]!==null
+			return obj.hasOwnProperty(key) && obj[key]!==null
 		})
 		.forEach(function (key) {
 			var flag;
-			var val = options[key];
+			var val = obj[key];
 
 			if (Array.isArray(excludes) && excludes.indexOf(key) !== -1) {
 				return;
 			}
-
-			flag = key;//.replace(/[A-Z]/g, '-$&').toLowerCase();
+			flag = (convertCamelCase)?key.replace(/[A-Z]/g, '-$&').toLowerCase():key;
 
 			if (val === true) {
 				args.push('--' + flag);
@@ -65,9 +68,13 @@ module.exports = function (options, excludes) {
 					args.push('--' + flag+'.'+k, flattened[k]);
 				})
 			}else if (Array.isArray(val)) {
-				val.forEach(function (arrVal) {
-					args.push('--' + flag, arrVal);
-				});
+				if(joinLists){
+					args.push('--' + flag, val.join(','));
+				}else{
+					val.forEach(function (arrVal) {
+						args.push('--' + flag, arrVal);
+					});
+				}
 			}
 		});
 

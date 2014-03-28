@@ -38,11 +38,37 @@ describe('dargs()', function () {
 	});
 
 	it('exclude options', function () {
-		var actual = dargs(fixture, ['b', 'e']);
+		var actual = dargs(fixture, {excludes:['b', 'e']});
 		var expected = [
 			'--a', 'foo',
 			'--d', '5',
 			'--camelCaseCamel',
+			'--h.i', 'hi',
+			'--h.j.k', 'jk'
+		];
+		assert.deepEqual(actual, expected);
+	});
+	it('optionally join lists', function () {
+		var actual = dargs(fixture, {joinLists:true});
+		var expected = [
+			'--a', 'foo',
+			'--b',
+			'--d', '5',
+			'--e', 'foo,bar',
+			'--camelCaseCamel',
+			'--h.i', 'hi',
+			'--h.j.k', 'jk'
+		];
+		assert.deepEqual(actual, expected);
+	});
+	it('optionally convert camelCase to camel-case', function () {
+		var actual = dargs(fixture, {joinLists:true,convertCamelCase:true});
+		var expected = [
+			'--a', 'foo',
+			'--b',
+			'--d', '5',
+			'--e', 'foo,bar',
+			'--camel-case-camel',
 			'--h.i', 'hi',
 			'--h.j.k', 'jk'
 		];
