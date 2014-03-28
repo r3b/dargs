@@ -6,12 +6,6 @@ Basically the inverse of an argument parser like nopt or minimist.
 
 >Forked from https://github.com/sindresorhus/dargs
 
-The differences are...
-
-- camelCase option names are not modified to dash-separated-words
-- objects are flattened and included as '--key.subkey value'
-
-
 ## Install
 
 ```bash
